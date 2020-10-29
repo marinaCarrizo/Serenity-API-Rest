@@ -1,0 +1,6 @@
+model\RegisterUserResponse.class
+steps\RegisterUserSteps.class
+templates\FreemarkerTemplate.class
+model\WebServiceEndpoints.class
+templates\MergeFrom.class
+apiActions\RegisterUserActions.class
