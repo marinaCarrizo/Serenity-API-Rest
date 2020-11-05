@@ -1,12 +1,10 @@
 package steps;
 
 import apiActions.RegisterUserActions;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
+import cucumber.api.java.en.And;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 import model.RegisterUserResponse;
 import net.thucydides.core.annotations.Steps;
 import templates.FieldValues;
@@ -17,7 +15,6 @@ import java.util.Map;
 
 import static net.serenitybdd.rest.SerenityRest.restAssuredThat;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
 
 public class RegisterUserSteps {
 
@@ -44,6 +41,7 @@ public class RegisterUserSteps {
 
     @Then("register API should have status code as {int}")
     public void registerAPIShouldHaveStatusCodeAs(int code) {
+
         restAssuredThat(response -> response.statusCode(code));
     }
 
@@ -53,19 +51,12 @@ public class RegisterUserSteps {
         restAssuredThat(response -> response.contentType("application/json"));
     }
 
-    @And("the register API should return proper json response")
-    public void theRegisterAPIShouldReturnProperJsonResponse() {
+    @And("the register API should return proper json response {string}")
+    public void theRegisterAPIShouldReturnProperJsonResponse(String token) {
 
-        GsonBuilder builder = new GsonBuilder();
-        Gson gson = builder.serializeNulls().setPrettyPrinting().create();
-        RegisterUserResponse registerUserResponse = gson.fromJson(registerUserActions.response.asString(), RegisterUserResponse.class);
+        Map<String, String> actualResponse = registerUserResponse.returned();
 
-        assertThat("Verify User registration Token", registerUserResponse.getToken(),
-                is(notNullValue()));
-        //Map<String, String> expectedResponse = credentials.get(0);
-        //Map<String, String> actualResponse = registerUserResponse.returned().;
-
-       // assertThat(actualResponse).containsAllEntriesOf(expectedResponse);
+        assertThat("has token", actualResponse.containsKey(token));
 
     }
 }

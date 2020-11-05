@@ -9,13 +9,6 @@ import java.util.Map;
 import static java.util.stream.Collectors.toMap;
 
 public class RegisterUserResponse {
-    @SerializedName("token")
-    @Expose
-    private String token;
-
-    public String getToken() {
-        return token;
-    }
 
     public Map<String, String> returned() {
         return mapOfStringsFrom(SerenityRest.lastResponse().getBody().as(Map.class));

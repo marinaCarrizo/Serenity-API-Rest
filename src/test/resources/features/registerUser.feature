@@ -7,4 +7,4 @@ Feature: Automate Register and Login APIs
     When the user sents a POST request to register API with valid request
     Then register API should have status code as 200
     And content-type as JSON
-    And the register API should return proper json response
+    And the register API should return proper json response "token"
